@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart School Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #0d0f14;
+  --surface: #13161e;
+  --surface2: #1a1e2a;
+  --border: rgba(255,255,255,0.07);
+  --text: #e8eaf0;
+  --muted: #7a7f96;
+  --accent-chat: #ff6b6b;
+  --accent-public: #00d2b4;
+  --accent-principal: #4a9eff;
+  --accent-teacher: #ffb347;
+  --accent-student: #a78bfa;
+  --accent-extra: #4ade80;
+}
+
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow blobs */
+.blob1, .blob2 {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.18;
+}
+.blob1 {
+  width: 600px; height: 600px;
+  background: #4a9eff;
+  top: -200px; left: -100px;
+}
+.blob2 {
+  width: 500px; height: 500px;
+  background: #a78bfa;
+  bottom: -150px; right: -100px;
+}
+
+/* HEADER */
+header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 60px 40px 40px;
+}
+
+.school-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(74,158,255,0.1);
+  border: 1px solid rgba(74,158,255,0.3);
+  border-radius: 100px;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: var(--accent-principal);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, #a0aec0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* MAIN LAYOUT */
+.wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* SIDEBAR NAV */
+.sidebar {
+  position: sticky;
+  top: 40px;
+}
+
+.nav-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 16px;
+  margin-bottom: 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 4px;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.nav-item:hover::before, .nav-item.active::before {
+  opacity: 1;
+}
+
+.nav-item[data-id="chat"]::before { background: rgba(255,107,107,0.08); }
+.nav-item[data-id="public"]::before { background: rgba(0,210,180,0.08); }
+.nav-item[data-id="principal"]::before { background: rgba(74,158,255,0.08); }
+.nav-item[data-id="teacher"]::before { background: rgba(255,179,71,0.08); }
+.nav-item[data-id="student"]::before { background: rgba(167,139,250,0.08); }
+.nav-item[data-id="extra"]::before { background: rgba(74,222,128,0.08); }
+
+.nav-item.active {
+  border-color: var(--current-color, rgba(255,255,255,0.1));
+}
+
+.nav-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-text {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.nav-text span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* CONTENT AREA */
+.content-area {
+  min-height: 600px;
+}
+
+.panel {
+  display: none;
+  animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panel.active {
+  display: block;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Panel Header */
+.panel-header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px 20px 0 0;
+  padding: 36px 40px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.panel-header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+  background: var(--accent-current, #4a9eff);
+}
+
+.panel-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.panel-emoji {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  background: var(--icon-bg, rgba(74,158,255,0.1));
+  border: 1px solid var(--icon-border, rgba(74,158,255,0.2));
+  flex-shrink: 0;
+}
+
+.panel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.panel-desc {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Features Grid */
+.features-grid {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 32px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 2px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.feature-item:hover {
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
+
+.feature-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--accent-current, #4a9eff);
+}
+
+.feature-item span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* Links Section */
+.links-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  padding: 28px 40px 36px;
+}
+
+.links-title {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+  group: true;
+}
+
+.link-card:hover {
+  border-color: var(--accent-current, #4a9eff);
+  background: rgba(255,255,255,0.03);
+  transform: translateX(4px);
+}
+
+.link-card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.link-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--icon-bg);
+  border: 1px solid var(--icon-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.link-info strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.link-info small {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.link-arrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: var(--icon-bg);
+  border: 1px solid var(--icon-border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-current, #4a9eff);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.link-card:hover .link-arrow {
+  background: var(--accent-current, #4a9eff);
+  color: white;
+  border-color: transparent;
+}
+
+/* Notice */
+.notice-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(255,179,71,0.08);
+  border: 1px solid rgba(255,179,71,0.2);
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+.notice-box span {
+  font-size: 13px;
+  color: #ffb347;
+  line-height: 1.6;
+}
+
+/* COLOR THEMES per section */
+[data-panel="chat"] .panel-header::after { background: var(--accent-chat); }
+[data-panel="chat"] .feature-dot { background: var(--accent-chat); }
+[data-panel="chat"] .link-icon,
+[data-panel="chat"] .panel-emoji { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.2); }
+[data-panel="chat"] .link-arrow { color: var(--accent-chat); background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.2); }
+[data-panel="chat"] .link-card:hover { border-color: var(--accent-chat); }
+[data-panel="chat"] .link-card:hover .link-arrow { background: var(--accent-chat); }
+
+[data-panel="public"] .panel-header::after { background: var(--accent-public); }
+[data-panel="public"] .feature-dot { background: var(--accent-public); }
+[data-panel="public"] .link-icon,
+[data-panel="public"] .panel-emoji { background: rgba(0,210,180,0.1); border-color: rgba(0,210,180,0.2); }
+[data-panel="public"] .link-arrow { color: var(--accent-public); background: rgba(0,210,180,0.08); border-color: rgba(0,210,180,0.2); }
+[data-panel="public"] .link-card:hover { border-color: var(--accent-public); }
+[data-panel="public"] .link-card:hover .link-arrow { background: var(--accent-public); color: #0d0f14; }
+
+[data-panel="principal"] .panel-header::after { background: var(--accent-principal); }
+[data-panel="principal"] .feature-dot { background: var(--accent-principal); }
+[data-panel="principal"] .link-icon,
+[data-panel="principal"] .panel-emoji { background: rgba(74,158,255,0.1); border-color: rgba(74,158,255,0.2); }
+[data-panel="principal"] .link-arrow { color: var(--accent-principal); background: rgba(74,158,255,0.08); border-color: rgba(74,158,255,0.2); }
+[data-panel="principal"] .link-card:hover { border-color: var(--accent-principal); }
+[data-panel="principal"] .link-card:hover .link-arrow { background: var(--accent-principal); }
+
+[data-panel="teacher"] .panel-header::after { background: var(--accent-teacher); }
+[data-panel="teacher"] .feature-dot { background: var(--accent-teacher); }
+[data-panel="teacher"] .link-icon,
+[data-panel="teacher"] .panel-emoji { background: rgba(255,179,71,0.1); border-color: rgba(255,179,71,0.2); }
+[data-panel="teacher"] .link-arrow { color: var(--accent-teacher); background: rgba(255,179,71,0.08); border-color: rgba(255,179,71,0.2); }
+[data-panel="teacher"] .link-card:hover { border-color: var(--accent-teacher); }
+[data-panel="teacher"] .link-card:hover .link-arrow { background: var(--accent-teacher); color: #0d0f14; }
+
+[data-panel="student"] .panel-header::after { background: var(--accent-student); }
+[data-panel="student"] .feature-dot { background: var(--accent-student); }
+[data-panel="student"] .link-icon,
+[data-panel="student"] .panel-emoji { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.2); }
+[data-panel="student"] .link-arrow { color: var(--accent-student); background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); }
+[data-panel="student"] .link-card:hover { border-color: var(--accent-student); }
+[data-panel="student"] .link-card:hover .link-arrow { background: var(--accent-student); }
+
+[data-panel="extra"] .panel-header::after { background: var(--accent-extra); }
+[data-panel="extra"] .feature-dot { background: var(--accent-extra); }
+[data-panel="extra"] .link-icon,
+[data-panel="extra"] .panel-emoji { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.2); }
+[data-panel="extra"] .link-arrow { color: var(--accent-extra); background: rgba(74,222,128,0.08); border-color: rgba(74,222,128,0.2); }
+[data-panel="extra"] .link-card:hover { border-color: var(--accent-extra); }
+[data-panel="extra"] .link-card:hover .link-arrow { background: var(--accent-extra); color: #0d0f14; }
+
+/* NAV active states */
+.nav-item[data-id="chat"].active { --current-color: rgba(255,107,107,0.3); border-color: var(--current-color); }
+.nav-item[data-id="public"].active { --current-color: rgba(0,210,180,0.3); border-color: var(--current-color); }
+.nav-item[data-id="principal"].active { --current-color: rgba(74,158,255,0.3); border-color: var(--current-color); }
+.nav-item[data-id="teacher"].active { --current-color: rgba(255,179,71,0.3); border-color: var(--current-color); }
+.nav-item[data-id="student"].active { --current-color: rgba(167,139,250,0.3); border-color: var(--current-color); }
+.nav-item[data-id="extra"].active { --current-color: rgba(74,222,128,0.3); border-color: var(--current-color); }
+
+/* nav icon backgrounds */
+.nav-item[data-id="chat"] .nav-icon { background: rgba(255,107,107,0.1); }
+.nav-item[data-id="public"] .nav-icon { background: rgba(0,210,180,0.1); }
+.nav-item[data-id="principal"] .nav-icon { background: rgba(74,158,255,0.1); }
+.nav-item[data-id="teacher"] .nav-icon { background: rgba(255,179,71,0.1); }
+.nav-item[data-id="student"] .nav-icon { background: rgba(167,139,250,0.1); }
+.nav-item[data-id="extra"] .nav-icon { background: rgba(74,222,128,0.1); }
+
+/* footer */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: var(--muted);
+  font-size: 13px;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid var(--border);
+}
+
+</style>
+</head>
+<body>
+
+<div class="blob1"></div>
+<div class="blob2"></div>
+
+<header>
+  <div class="school-badge">🏫 Smart System</div>
+  <h1>School Management<br>System</h1>
+  <p class="subtitle">Complete digital solution for principals, teachers, and students — all in one place.</p>
+</header>
+
+<div class="wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="nav-label">Navigation</div>
+
+    <div class="nav-item active" data-id="chat" onclick="showPanel('chat', this)">
+      <div class="nav-icon">💬</div>
+      <div class="nav-text">
+        <strong>School Chat</strong>
+        <span>Messaging System</span>
+      </div>
+    </div>
+
+    <div class="nav-item" data-id="public" onclick="showPanel('public', this)">
+      <div class="nav-icon">🌐</div>
+      <div class="nav-text">
+        <strong>Public Info</strong>
+        <span>School Information</span>
+      </div>
+    </div>
+
+    <div class="nav-item" data-id="principal" onclick="showPanel('principal', this)">
+      <div class="nav-icon">🏫</div>
+      <div class="nav-text">
+        <strong>Principal Panel</strong>
+        <span>Admin Controls</span>
+      </div>
+    </div>
+
+    <div class="nav-item" data-id="teacher" onclick="showPanel('teacher', this)">
+      <div class="nav-icon">👨‍🏫</div>
+      <div class="nav-text">
+        <strong>Teacher Panel</strong>
+        <span>Attendance & Records</span>
+      </div>
+    </div>
+
+    <div class="nav-item" data-id="student" onclick="showPanel('student', this)">
+      <div class="nav-icon">🎓</div>
+      <div class="nav-text">
+        <strong>Student Panel</strong>
+        <span>Results & Cards</span>
+      </div>
+    </div>
+
+    <div class="nav-item" data-id="extra" onclick="showPanel('extra', this)">
+      <div class="nav-icon">🔗</div>
+      <div class="nav-text">
+        <strong>Extra & AI</strong>
+        <span>Projects & AI Chat</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT AREA -->
+  <main class="content-area">
+
+    <!-- CHAT PANEL -->
+    <div class="panel active" data-panel="chat" id="panel-chat">
+      <div class="panel-header">
+        <div class="panel-header-inner">
+          <div class="panel-emoji">💬</div>
+          <div>
+            <div class="panel-title">School Chat Application</div>
+            <div class="panel-desc">Secure internal messaging for students and teachers — no personal accounts needed.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-item"><div class="feature-dot"></div><span>Class Group Chat</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Private Student–Teacher Chat</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>No Mobile Number Required</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>No Gmail Login Needed</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>QR Code Login System</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Principal Creates Accounts</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Admin Can Monitor Chats</span></div>
+      </div>
+
+      <div class="links-section">
+        <div class="links-title">Access Link</div>
+        <a href="https://schoolmassge.firebaseapp.com" target="_blank" class="link-card">
+          <div class="link-card-left">
+            <div class="link-icon">💬</div>
+            <div class="link-info">
+              <strong>Open Chat App</strong>
+              <small>schoolmassge.firebaseapp.com</small>
+            </div>
+          </div>
+          <div class="link-arrow">Open ↗</div>
+        </a>
+
+        <div class="notice-box">
+          <span>⚠️ All chats may be monitored by School Administration for safety and compliance.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUBLIC PANEL -->
+    <div class="panel" data-panel="public" id="panel-public">
+      <div class="panel-header">
+        <div class="panel-header-inner">
+          <div class="panel-emoji">🌐</div>
+          <div>
+            <div class="panel-title">Public School Information</div>
+            <div class="panel-desc">Everything parents and students need to know about the school — publicly accessible.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-item"><div class="feature-dot"></div><span>School Introduction</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Photos & Facilities</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Total Teachers Info</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Total Classrooms</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Class-wise Seat Availability</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Admission Details</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>School Fees Information</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Contact & Location</span></div>
+      </div>
+
+      <div class="links-section">
+        <div class="links-title">No external link — public info shown directly in system</div>
+      </div>
+    </div>
+
+    <!-- PRINCIPAL PANEL -->
+    <div class="panel" data-panel="principal" id="panel-principal">
+      <div class="panel-header">
+        <div class="panel-header-inner">
+          <div class="panel-emoji">🏫</div>
+          <div>
+            <div class="panel-title">Principal / Admin Panel</div>
+            <div class="panel-desc">Full administrative control — manage teachers, salaries, seats, and school records.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-item"><div class="feature-dot"></div><span>Add Teacher Details</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Teacher Salary Management</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Teacher Records</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Class Seat Management</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>School Admin Controls</span></div>
+      </div>
+
+      <div class="links-section">
+        <div class="links-title">Access Link</div>
+        <a href="https://schoolerp1-framhtml.vercel.app/" target="_blank" class="link-card">
+          <div class="link-card-left">
+            <div class="link-icon">🏫</div>
+            <div class="link-info">
+              <strong>Open Admin System</strong>
+              <small>schoolerp1-framhtml.vercel.app</small>
+            </div>
+          </div>
+          <div class="link-arrow">Open ↗</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- TEACHER PANEL -->
+    <div class="panel" data-panel="teacher" id="panel-teacher">
+      <div class="panel-header">
+        <div class="panel-header-inner">
+          <div class="panel-emoji">👨‍🏫</div>
+          <div>
+            <div class="panel-title">Teacher Panel</div>
+            <div class="panel-desc">Daily attendance marking, student lists, and class management tools for teachers.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-item"><div class="feature-dot"></div><span>Mark Class Attendance</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>View Student List</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Manage Attendance Records</span></div>
+      </div>
+
+      <div class="links-section">
+        <div class="links-title">Access Link</div>
+        <a href="https://besic.vercel.app/" target="_blank" class="link-card">
+          <div class="link-card-left">
+            <div class="link-icon">📋</div>
+            <div class="link-info">
+              <strong>Open Attendance System</strong>
+              <small>besic.vercel.app</small>
+            </div>
+          </div>
+          <div class="link-arrow">Open ↗</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- STUDENT PANEL -->
+    <div class="panel" data-panel="student" id="panel-student">
+      <div class="panel-header">
+        <div class="panel-header-inner">
+          <div class="panel-emoji">🎓</div>
+          <div>
+            <div class="panel-title">Student Panel</div>
+            <div class="panel-desc">Check results, download marksheets, admit cards, and manage student records.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-item"><div class="feature-dot"></div><span>Check Current Results</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>View Subject Marks</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Download Admit Card</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Download Marksheet</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Add New Students</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Student Records</span></div>
+      </div>
+
+      <div class="links-section">
+        <div class="links-title">Access Links</div>
+        <a href="https://schhool-4.vercel.app/" target="_blank" class="link-card">
+          <div class="link-card-left">
+            <div class="link-icon">🎓</div>
+            <div class="link-info">
+              <strong>Open Student System</strong>
+              <small>schhool-4.vercel.app</small>
+            </div>
+          </div>
+          <div class="link-arrow">Open ↗</div>
+        </a>
+        <a href="https://marksheetprint2.vercel.app/" target="_blank" class="link-card">
+          <div class="link-card-left">
+            <div class="link-icon">📄</div>
+            <div class="link-info">
+              <strong>Result & Print System</strong>
+              <small>marksheetprint2.vercel.app — Marksheet / Admit Card</small>
+            </div>
+          </div>
+          <div class="link-arrow">Open ↗</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- EXTRA PANEL -->
+    <div class="panel" data-panel="extra" id="panel-extra">
+      <div class="panel-header">
+        <div class="panel-header-inner">
+          <div class="panel-emoji">🔗</div>
+          <div>
+            <div class="panel-title">Extra Projects & AI Chat</div>
+            <div class="panel-desc">AI-powered school assistant and global public chat for advanced features.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-item"><div class="feature-dot"></div><span>School AI Chat System</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Students Can Ask AI Questions</span></div>
+        <div class="feature-item"><div class="feature-dot"></div><span>Public Global Chat</span></div>
+      </div>
+
+      <div class="links-section">
+        <div class="links-title">Access Links</div>
+        <a href="https://dataleran.vercel.app/" target="_blank" class="link-card">
+          <div class="link-card-left">
+            <div class="link-icon">🤖</div>
+            <div class="link-info">
+              <strong>AI School Chat</strong>
+              <small>dataleran.vercel.app — Ask questions to AI</small>
+            </div>
+          </div>
+          <div class="link-arrow">Open ↗</div>
+        </a>
+        <a href="https://publicchat-2udg.onrender.com" target="_blank" class="link-card">
+          <div class="link-card-left">
+            <div class="link-icon">🌍</div>
+            <div class="link-info">
+              <strong>Public Global Chat</strong>
+              <small>publicchat-2udg.onrender.com — Advanced Project</small>
+            </div>
+          </div>
+          <div class="link-arrow">Open ↗</div>
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  Smart School Management System &nbsp;•&nbsp; All rights reserved
+</footer>
+
+<script>
+function showPanel(id, navEl) {
+  // Hide all panels
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  // Remove active from all nav items
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  // Show selected
+  document.getElementById('panel-' + id).classList.add('active');
+  navEl.classList.add('active');
+}
+</script>
+
+</body>
+</html>
