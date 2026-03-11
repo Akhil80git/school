@@ -22,9 +22,7 @@
   --accent-extra: #4ade80;
 }
 
-*, *::before, *::after {
-  margin: 0; padding: 0; box-sizing: border-box;
-}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 body {
   font-family: 'DM Sans', sans-serif;
@@ -34,476 +32,258 @@ body {
   overflow-x: hidden;
 }
 
-/* Background grid */
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background-image:
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
 
-/* Glow blobs */
 .blob1, .blob2 {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(120px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.18;
+  position: fixed; border-radius: 50%;
+  filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.15;
 }
-.blob1 {
-  width: 600px; height: 600px;
-  background: #4a9eff;
-  top: -200px; left: -100px;
-}
-.blob2 {
-  width: 500px; height: 500px;
-  background: #a78bfa;
-  bottom: -150px; right: -100px;
-}
+.blob1 { width:600px; height:600px; background:#4a9eff; top:-200px; left:-100px; }
+.blob2 { width:500px; height:500px; background:#a78bfa; bottom:-150px; right:-100px; }
 
 /* HEADER */
 header {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  padding: 60px 40px 40px;
+  position: relative; z-index: 10;
+  text-align: center; padding: 50px 40px 30px;
 }
-
 .school-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(74,158,255,0.1);
-  border: 1px solid rgba(74,158,255,0.3);
-  border-radius: 100px;
-  padding: 8px 20px;
-  font-size: 13px;
-  color: var(--accent-principal);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-bottom: 24px;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(74,158,255,0.1); border: 1px solid rgba(74,158,255,0.3);
+  border-radius: 100px; padding: 8px 20px;
+  font-size: 13px; color: var(--accent-principal);
+  letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 20px;
 }
-
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 900;
-  line-height: 1.1;
+  font-size: clamp(32px, 4vw, 56px); font-weight: 900; line-height: 1.1;
   background: linear-gradient(135deg, #ffffff 0%, #a0aec0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 16px;
-}
-
-.subtitle {
-  color: var(--muted);
-  font-size: 16px;
-  font-weight: 300;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-/* MAIN LAYOUT */
-.wrapper {
-  position: relative;
-  z-index: 10;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 40px 80px;
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 24px;
-  align-items: start;
-}
-
-/* SIDEBAR NAV */
-.sidebar {
-  position: sticky;
-  top: 40px;
-}
-
-.nav-label {
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-  padding: 0 16px;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   margin-bottom: 12px;
 }
+.subtitle { color: var(--muted); font-size: 15px; font-weight: 300; }
 
+/* LAYOUT */
+.app {
+  position: relative; z-index: 10;
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 30px 60px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px; align-items: start;
+}
+
+/* SIDEBAR */
+.sidebar { position: sticky; top: 20px; }
+.nav-label {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; padding: 0 14px; margin-bottom: 10px;
+}
 .nav-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-bottom: 4px;
-  border: 1px solid transparent;
-  position: relative;
-  overflow: hidden;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: 12px; cursor: pointer;
+  transition: all 0.2s; margin-bottom: 4px;
+  border: 1px solid transparent; position: relative; overflow: hidden;
 }
-
 .nav-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.2s;
+  content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity 0.2s;
 }
-
-.nav-item:hover::before, .nav-item.active::before {
-  opacity: 1;
-}
-
+.nav-item:hover::before, .nav-item.active::before { opacity: 1; }
 .nav-item[data-id="chat"]::before { background: rgba(255,107,107,0.08); }
 .nav-item[data-id="public"]::before { background: rgba(0,210,180,0.08); }
 .nav-item[data-id="principal"]::before { background: rgba(74,158,255,0.08); }
 .nav-item[data-id="teacher"]::before { background: rgba(255,179,71,0.08); }
 .nav-item[data-id="student"]::before { background: rgba(167,139,250,0.08); }
 .nav-item[data-id="extra"]::before { background: rgba(74,222,128,0.08); }
-
-.nav-item.active {
-  border-color: var(--current-color, rgba(255,255,255,0.1));
-}
+.nav-item[data-id="chat"].active { border-color: rgba(255,107,107,0.3); }
+.nav-item[data-id="public"].active { border-color: rgba(0,210,180,0.3); }
+.nav-item[data-id="principal"].active { border-color: rgba(74,158,255,0.3); }
+.nav-item[data-id="teacher"].active { border-color: rgba(255,179,71,0.3); }
+.nav-item[data-id="student"].active { border-color: rgba(167,139,250,0.3); }
+.nav-item[data-id="extra"].active { border-color: rgba(74,222,128,0.3); }
 
 .nav-icon {
-  width: 42px; height: 42px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0; position: relative; z-index: 1;
 }
+.nav-item[data-id="chat"] .nav-icon { background: rgba(255,107,107,0.12); }
+.nav-item[data-id="public"] .nav-icon { background: rgba(0,210,180,0.12); }
+.nav-item[data-id="principal"] .nav-icon { background: rgba(74,158,255,0.12); }
+.nav-item[data-id="teacher"] .nav-icon { background: rgba(255,179,71,0.12); }
+.nav-item[data-id="student"] .nav-icon { background: rgba(167,139,250,0.12); }
+.nav-item[data-id="extra"] .nav-icon { background: rgba(74,222,128,0.12); }
 
-.nav-text {
-  position: relative;
-  z-index: 1;
-}
+.nav-text { position: relative; z-index: 1; }
+.nav-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); }
+.nav-text span { font-size: 11px; color: var(--muted); }
 
-.nav-text strong {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-}
+/* CONTENT */
+.content-area { min-height: 80vh; }
 
-.nav-text span {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-/* CONTENT AREA */
-.content-area {
-  min-height: 600px;
-}
-
-.panel {
-  display: none;
-  animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.panel.active {
-  display: block;
-}
+.panel { display: none; animation: slideIn 0.35s cubic-bezier(0.16,1,0.3,1); }
+.panel.active { display: block; }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity:0; transform:translateX(16px); }
+  to { opacity:1; transform:translateX(0); }
 }
 
-/* Panel Header */
-.panel-header {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px 20px 0 0;
-  padding: 36px 40px;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 2px;
+.panel-info {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px 32px;
+  margin-bottom: 16px; position: relative; overflow: hidden;
 }
-
-.panel-header::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  border-radius: 20px 20px 0 0;
-  background: var(--accent-current, #4a9eff);
+.panel-info::before {
+  content: ''; position: absolute; top:0; left:0; right:0; height:3px;
 }
+[data-panel="chat"] .panel-info::before { background: var(--accent-chat); }
+[data-panel="public"] .panel-info::before { background: var(--accent-public); }
+[data-panel="principal"] .panel-info::before { background: var(--accent-principal); }
+[data-panel="teacher"] .panel-info::before { background: var(--accent-teacher); }
+[data-panel="student"] .panel-info::before { background: var(--accent-student); }
+[data-panel="extra"] .panel-info::before { background: var(--accent-extra); }
 
-.panel-header-inner {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
+.panel-top { display: flex; align-items: center; gap: 18px; margin-bottom: 20px; }
 .panel-emoji {
-  width: 64px; height: 64px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  background: var(--icon-bg, rgba(74,158,255,0.1));
-  border: 1px solid var(--icon-border, rgba(74,158,255,0.2));
-  flex-shrink: 0;
+  width: 56px; height: 56px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
 }
+[data-panel="chat"] .panel-emoji { background:rgba(255,107,107,0.12); border:1px solid rgba(255,107,107,0.2); }
+[data-panel="public"] .panel-emoji { background:rgba(0,210,180,0.12); border:1px solid rgba(0,210,180,0.2); }
+[data-panel="principal"] .panel-emoji { background:rgba(74,158,255,0.12); border:1px solid rgba(74,158,255,0.2); }
+[data-panel="teacher"] .panel-emoji { background:rgba(255,179,71,0.12); border:1px solid rgba(255,179,71,0.2); }
+[data-panel="student"] .panel-emoji { background:rgba(167,139,250,0.12); border:1px solid rgba(167,139,250,0.2); }
+[data-panel="extra"] .panel-emoji { background:rgba(74,222,128,0.12); border:1px solid rgba(74,222,128,0.2); }
 
-.panel-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 6px;
+.panel-title { font-family:'Playfair Display',serif; font-size:24px; font-weight:700; margin-bottom:4px; }
+.panel-desc { color:var(--muted); font-size:13px; line-height:1.6; }
+
+.features-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.feat {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 8px;
+  font-size: 12px; font-weight: 500; color: var(--text);
 }
+.feat-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+[data-panel="chat"] .feat-dot { background:var(--accent-chat); }
+[data-panel="public"] .feat-dot { background:var(--accent-public); }
+[data-panel="principal"] .feat-dot { background:var(--accent-principal); }
+[data-panel="teacher"] .feat-dot { background:var(--accent-teacher); }
+[data-panel="student"] .feat-dot { background:var(--accent-student); }
+[data-panel="extra"] .feat-dot { background:var(--accent-extra); }
 
-.panel-desc {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
+.link-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+
+.open-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 20px; border-radius: 10px; cursor: pointer;
+  font-size: 13px; font-weight: 600; border: 1px solid;
+  transition: all 0.2s; background: var(--surface2);
+  user-select: none;
 }
+.open-btn:hover { transform: translateY(-1px); filter: brightness(1.2); }
+.open-btn .btn-icon { font-size: 16px; }
+.open-btn .btn-label { line-height: 1.3; }
+.open-btn .btn-url { display:block; font-size:10px; font-weight:400; opacity:0.65; }
 
-/* Features Grid */
-.features-grid {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: none;
-  padding: 32px 40px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
-  margin-bottom: 2px;
-}
+[data-panel="chat"] .open-btn { color:var(--accent-chat); border-color:rgba(255,107,107,0.25); }
+[data-panel="public"] .open-btn { color:var(--accent-public); border-color:rgba(0,210,180,0.25); }
+[data-panel="principal"] .open-btn { color:var(--accent-principal); border-color:rgba(74,158,255,0.25); }
+[data-panel="teacher"] .open-btn { color:var(--accent-teacher); border-color:rgba(255,179,71,0.25); }
+[data-panel="student"] .open-btn { color:var(--accent-student); border-color:rgba(167,139,250,0.25); }
+[data-panel="extra"] .open-btn { color:var(--accent-extra); border-color:rgba(74,222,128,0.25); }
 
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: var(--surface2);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  transition: all 0.2s ease;
-}
-
-.feature-item:hover {
-  border-color: rgba(255,255,255,0.12);
-  transform: translateY(-1px);
-}
-
-.feature-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: var(--accent-current, #4a9eff);
-}
-
-.feature-item span {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1.4;
-}
-
-/* Links Section */
-.links-section {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 20px 20px;
-  padding: 28px 40px 36px;
-}
-
-.links-title {
-  font-size: 11px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.link-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 22px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  margin-bottom: 10px;
-  transition: all 0.25s ease;
-  text-decoration: none;
-  color: inherit;
-  group: true;
-}
-
-.link-card:hover {
-  border-color: var(--accent-current, #4a9eff);
-  background: rgba(255,255,255,0.03);
-  transform: translateX(4px);
-}
-
-.link-card-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.link-icon {
-  width: 44px; height: 44px;
-  border-radius: 10px;
-  background: var(--icon-bg);
-  border: 1px solid var(--icon-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.link-info strong {
-  display: block;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 2px;
-}
-
-.link-info small {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.link-arrow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  border-radius: 8px;
-  background: var(--icon-bg);
-  border: 1px solid var(--icon-border);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent-current, #4a9eff);
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.link-card:hover .link-arrow {
-  background: var(--accent-current, #4a9eff);
-  color: white;
-  border-color: transparent;
-}
-
-/* Notice */
 .notice-box {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px 20px;
-  background: rgba(255,179,71,0.08);
-  border: 1px solid rgba(255,179,71,0.2);
-  border-radius: 12px;
-  margin-top: 12px;
+  display:flex; align-items:flex-start; gap:10px;
+  padding:12px 16px; background:rgba(255,179,71,0.07);
+  border:1px solid rgba(255,179,71,0.2); border-radius:10px; margin-top:14px;
+  font-size:12px; color:#ffb347; line-height:1.6;
 }
 
-.notice-box span {
-  font-size: 13px;
-  color: #ffb347;
-  line-height: 1.6;
+/* IFRAME VIEWER */
+.iframe-viewer {
+  display: none;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; margin-top: 0;
+}
+.iframe-viewer.visible { display: block; animation: slideIn 0.3s ease; }
+
+.iframe-topbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px; background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+.iframe-dots { display:flex; gap:6px; }
+.iframe-dots span { width:12px; height:12px; border-radius:50%; display:block; }
+.iframe-dots span:nth-child(1) { background:#ff6b6b; }
+.iframe-dots span:nth-child(2) { background:#ffb347; }
+.iframe-dots span:nth-child(3) { background:#4ade80; }
+
+.iframe-url-bar {
+  flex: 1; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 14px; font-size: 12px; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* COLOR THEMES per section */
-[data-panel="chat"] .panel-header::after { background: var(--accent-chat); }
-[data-panel="chat"] .feature-dot { background: var(--accent-chat); }
-[data-panel="chat"] .link-icon,
-[data-panel="chat"] .panel-emoji { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.2); }
-[data-panel="chat"] .link-arrow { color: var(--accent-chat); background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.2); }
-[data-panel="chat"] .link-card:hover { border-color: var(--accent-chat); }
-[data-panel="chat"] .link-card:hover .link-arrow { background: var(--accent-chat); }
+.close-iframe {
+  padding: 6px 14px; background: rgba(255,107,107,0.1);
+  border: 1px solid rgba(255,107,107,0.2); border-radius: 6px;
+  color: var(--accent-chat); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.close-iframe:hover { background: rgba(255,107,107,0.25); }
 
-[data-panel="public"] .panel-header::after { background: var(--accent-public); }
-[data-panel="public"] .feature-dot { background: var(--accent-public); }
-[data-panel="public"] .link-icon,
-[data-panel="public"] .panel-emoji { background: rgba(0,210,180,0.1); border-color: rgba(0,210,180,0.2); }
-[data-panel="public"] .link-arrow { color: var(--accent-public); background: rgba(0,210,180,0.08); border-color: rgba(0,210,180,0.2); }
-[data-panel="public"] .link-card:hover { border-color: var(--accent-public); }
-[data-panel="public"] .link-card:hover .link-arrow { background: var(--accent-public); color: #0d0f14; }
+.iframe-container {
+  position: relative; width: 100%; height: 78vh; background: white;
+}
+.iframe-container iframe { width: 100%; height: 100%; border: none; display: block; }
 
-[data-panel="principal"] .panel-header::after { background: var(--accent-principal); }
-[data-panel="principal"] .feature-dot { background: var(--accent-principal); }
-[data-panel="principal"] .link-icon,
-[data-panel="principal"] .panel-emoji { background: rgba(74,158,255,0.1); border-color: rgba(74,158,255,0.2); }
-[data-panel="principal"] .link-arrow { color: var(--accent-principal); background: rgba(74,158,255,0.08); border-color: rgba(74,158,255,0.2); }
-[data-panel="principal"] .link-card:hover { border-color: var(--accent-principal); }
-[data-panel="principal"] .link-card:hover .link-arrow { background: var(--accent-principal); }
+.iframe-loading {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #0d0f14; gap: 16px;
+  font-size: 14px; color: var(--muted);
+}
+.spinner {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent-principal);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-[data-panel="teacher"] .panel-header::after { background: var(--accent-teacher); }
-[data-panel="teacher"] .feature-dot { background: var(--accent-teacher); }
-[data-panel="teacher"] .link-icon,
-[data-panel="teacher"] .panel-emoji { background: rgba(255,179,71,0.1); border-color: rgba(255,179,71,0.2); }
-[data-panel="teacher"] .link-arrow { color: var(--accent-teacher); background: rgba(255,179,71,0.08); border-color: rgba(255,179,71,0.2); }
-[data-panel="teacher"] .link-card:hover { border-color: var(--accent-teacher); }
-[data-panel="teacher"] .link-card:hover .link-arrow { background: var(--accent-teacher); color: #0d0f14; }
+/* blocked message */
+.blocked-msg {
+  display: none;
+  padding: 40px; text-align: center; color: var(--muted);
+  background: var(--surface2); border-radius: 0 0 16px 16px;
+}
+.blocked-msg .big { font-size: 48px; margin-bottom: 12px; }
+.blocked-msg p { font-size: 14px; line-height: 1.7; }
+.blocked-msg a {
+  display: inline-block; margin-top: 16px;
+  padding: 10px 24px; border-radius: 8px;
+  background: rgba(74,158,255,0.1); border: 1px solid rgba(74,158,255,0.3);
+  color: var(--accent-principal); font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.blocked-msg a:hover { background: rgba(74,158,255,0.2); }
 
-[data-panel="student"] .panel-header::after { background: var(--accent-student); }
-[data-panel="student"] .feature-dot { background: var(--accent-student); }
-[data-panel="student"] .link-icon,
-[data-panel="student"] .panel-emoji { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.2); }
-[data-panel="student"] .link-arrow { color: var(--accent-student); background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); }
-[data-panel="student"] .link-card:hover { border-color: var(--accent-student); }
-[data-panel="student"] .link-card:hover .link-arrow { background: var(--accent-student); }
-
-[data-panel="extra"] .panel-header::after { background: var(--accent-extra); }
-[data-panel="extra"] .feature-dot { background: var(--accent-extra); }
-[data-panel="extra"] .link-icon,
-[data-panel="extra"] .panel-emoji { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.2); }
-[data-panel="extra"] .link-arrow { color: var(--accent-extra); background: rgba(74,222,128,0.08); border-color: rgba(74,222,128,0.2); }
-[data-panel="extra"] .link-card:hover { border-color: var(--accent-extra); }
-[data-panel="extra"] .link-card:hover .link-arrow { background: var(--accent-extra); color: #0d0f14; }
-
-/* NAV active states */
-.nav-item[data-id="chat"].active { --current-color: rgba(255,107,107,0.3); border-color: var(--current-color); }
-.nav-item[data-id="public"].active { --current-color: rgba(0,210,180,0.3); border-color: var(--current-color); }
-.nav-item[data-id="principal"].active { --current-color: rgba(74,158,255,0.3); border-color: var(--current-color); }
-.nav-item[data-id="teacher"].active { --current-color: rgba(255,179,71,0.3); border-color: var(--current-color); }
-.nav-item[data-id="student"].active { --current-color: rgba(167,139,250,0.3); border-color: var(--current-color); }
-.nav-item[data-id="extra"].active { --current-color: rgba(74,222,128,0.3); border-color: var(--current-color); }
-
-/* nav icon backgrounds */
-.nav-item[data-id="chat"] .nav-icon { background: rgba(255,107,107,0.1); }
-.nav-item[data-id="public"] .nav-icon { background: rgba(0,210,180,0.1); }
-.nav-item[data-id="principal"] .nav-icon { background: rgba(74,158,255,0.1); }
-.nav-item[data-id="teacher"] .nav-icon { background: rgba(255,179,71,0.1); }
-.nav-item[data-id="student"] .nav-icon { background: rgba(167,139,250,0.1); }
-.nav-item[data-id="extra"] .nav-icon { background: rgba(74,222,128,0.1); }
-
-/* footer */
 footer {
-  text-align: center;
-  padding: 30px;
-  color: var(--muted);
-  font-size: 13px;
-  position: relative;
-  z-index: 10;
-  border-top: 1px solid var(--border);
+  text-align:center; padding:24px; color:var(--muted); font-size:12px;
+  position:relative; z-index:10; border-top:1px solid var(--border);
 }
-
 </style>
 </head>
 <body>
@@ -513,312 +293,384 @@ footer {
 
 <header>
   <div class="school-badge">🏫 Smart System</div>
-  <h1>School Management<br>System</h1>
-  <p class="subtitle">Complete digital solution for principals, teachers, and students — all in one place.</p>
+  <h1>School Management System</h1>
+  <p class="subtitle">Complete digital solution — click any link to open it right here on this page.</p>
 </header>
 
-<div class="wrapper">
+<div class="app">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="nav-label">Navigation</div>
-
-    <div class="nav-item active" data-id="chat" onclick="showPanel('chat', this)">
+    <div class="nav-item active" data-id="chat" onclick="showPanel('chat',this)">
       <div class="nav-icon">💬</div>
-      <div class="nav-text">
-        <strong>School Chat</strong>
-        <span>Messaging System</span>
-      </div>
+      <div class="nav-text"><strong>School Chat</strong><span>Messaging System</span></div>
     </div>
-
-    <div class="nav-item" data-id="public" onclick="showPanel('public', this)">
+    <div class="nav-item" data-id="public" onclick="showPanel('public',this)">
       <div class="nav-icon">🌐</div>
-      <div class="nav-text">
-        <strong>Public Info</strong>
-        <span>School Information</span>
-      </div>
+      <div class="nav-text"><strong>Public Info</strong><span>School Information</span></div>
     </div>
-
-    <div class="nav-item" data-id="principal" onclick="showPanel('principal', this)">
+    <div class="nav-item" data-id="principal" onclick="showPanel('principal',this)">
       <div class="nav-icon">🏫</div>
-      <div class="nav-text">
-        <strong>Principal Panel</strong>
-        <span>Admin Controls</span>
-      </div>
+      <div class="nav-text"><strong>Principal Panel</strong><span>Admin Controls</span></div>
     </div>
-
-    <div class="nav-item" data-id="teacher" onclick="showPanel('teacher', this)">
+    <div class="nav-item" data-id="teacher" onclick="showPanel('teacher',this)">
       <div class="nav-icon">👨‍🏫</div>
-      <div class="nav-text">
-        <strong>Teacher Panel</strong>
-        <span>Attendance & Records</span>
-      </div>
+      <div class="nav-text"><strong>Teacher Panel</strong><span>Attendance & Records</span></div>
     </div>
-
-    <div class="nav-item" data-id="student" onclick="showPanel('student', this)">
+    <div class="nav-item" data-id="student" onclick="showPanel('student',this)">
       <div class="nav-icon">🎓</div>
-      <div class="nav-text">
-        <strong>Student Panel</strong>
-        <span>Results & Cards</span>
-      </div>
+      <div class="nav-text"><strong>Student Panel</strong><span>Results & Cards</span></div>
     </div>
-
-    <div class="nav-item" data-id="extra" onclick="showPanel('extra', this)">
+    <div class="nav-item" data-id="extra" onclick="showPanel('extra',this)">
       <div class="nav-icon">🔗</div>
-      <div class="nav-text">
-        <strong>Extra & AI</strong>
-        <span>Projects & AI Chat</span>
-      </div>
+      <div class="nav-text"><strong>Extra & AI</strong><span>Projects & AI Chat</span></div>
     </div>
   </aside>
 
-  <!-- CONTENT AREA -->
+  <!-- MAIN -->
   <main class="content-area">
 
-    <!-- CHAT PANEL -->
+    <!-- CHAT -->
     <div class="panel active" data-panel="chat" id="panel-chat">
-      <div class="panel-header">
-        <div class="panel-header-inner">
+      <div class="panel-info">
+        <div class="panel-top">
           <div class="panel-emoji">💬</div>
           <div>
             <div class="panel-title">School Chat Application</div>
-            <div class="panel-desc">Secure internal messaging for students and teachers — no personal accounts needed.</div>
+            <div class="panel-desc">Secure internal messaging — no personal accounts needed.</div>
           </div>
         </div>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-item"><div class="feature-dot"></div><span>Class Group Chat</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Private Student–Teacher Chat</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>No Mobile Number Required</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>No Gmail Login Needed</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>QR Code Login System</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Principal Creates Accounts</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Admin Can Monitor Chats</span></div>
-      </div>
-
-      <div class="links-section">
-        <div class="links-title">Access Link</div>
-        <a href="https://schoolmassge.firebaseapp.com" target="_blank" class="link-card">
-          <div class="link-card-left">
-            <div class="link-icon">💬</div>
-            <div class="link-info">
-              <strong>Open Chat App</strong>
-              <small>schoolmassge.firebaseapp.com</small>
-            </div>
+        <div class="features-row">
+          <div class="feat"><div class="feat-dot"></div>Class Group Chat</div>
+          <div class="feat"><div class="feat-dot"></div>Private Student–Teacher Chat</div>
+          <div class="feat"><div class="feat-dot"></div>No Mobile Number Required</div>
+          <div class="feat"><div class="feat-dot"></div>No Gmail Login</div>
+          <div class="feat"><div class="feat-dot"></div>QR Code Login</div>
+          <div class="feat"><div class="feat-dot"></div>Principal Creates Accounts</div>
+          <div class="feat"><div class="feat-dot"></div>Admin Can Monitor Chats</div>
+        </div>
+        <div class="link-buttons">
+          <div class="open-btn" onclick="openSite('chat','https://schoolmassge.firebaseapp.com','schoolmassge.firebaseapp.com')">
+            <span class="btn-icon">💬</span>
+            <span class="btn-label">Open Chat App<span class="btn-url">schoolmassge.firebaseapp.com</span></span>
+            <span>▶</span>
           </div>
-          <div class="link-arrow">Open ↗</div>
-        </a>
-
-        <div class="notice-box">
-          <span>⚠️ All chats may be monitored by School Administration for safety and compliance.</span>
+        </div>
+        <div class="notice-box">⚠️ All chats may be monitored by School Administration.</div>
+      </div>
+      <div class="iframe-viewer" id="iframe-chat">
+        <div class="iframe-topbar">
+          <div class="iframe-dots"><span></span><span></span><span></span></div>
+          <div class="iframe-url-bar" id="url-chat">—</div>
+          <div class="close-iframe" onclick="closeSite('chat')">✕ Close</div>
+        </div>
+        <div class="iframe-container" id="container-chat">
+          <div class="iframe-loading" id="loading-chat"><div class="spinner"></div>Loading...</div>
+          <iframe id="frame-chat" onload="hideLoader('chat')" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
+        </div>
+        <div class="blocked-msg" id="blocked-chat">
+          <div class="big">🔒</div>
+          <p>This website has blocked embedding.<br>Please open it directly in a new tab.</p>
+          <a id="direct-chat" href="#" target="_blank">Open in New Tab ↗</a>
         </div>
       </div>
     </div>
 
-    <!-- PUBLIC PANEL -->
+    <!-- PUBLIC -->
     <div class="panel" data-panel="public" id="panel-public">
-      <div class="panel-header">
-        <div class="panel-header-inner">
+      <div class="panel-info">
+        <div class="panel-top">
           <div class="panel-emoji">🌐</div>
           <div>
             <div class="panel-title">Public School Information</div>
-            <div class="panel-desc">Everything parents and students need to know about the school — publicly accessible.</div>
+            <div class="panel-desc">Everything parents and students need — publicly accessible.</div>
           </div>
         </div>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-item"><div class="feature-dot"></div><span>School Introduction</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Photos & Facilities</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Total Teachers Info</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Total Classrooms</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Class-wise Seat Availability</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Admission Details</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>School Fees Information</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Contact & Location</span></div>
-      </div>
-
-      <div class="links-section">
-        <div class="links-title">No external link — public info shown directly in system</div>
+        <div class="features-row">
+          <div class="feat"><div class="feat-dot"></div>School Introduction</div>
+          <div class="feat"><div class="feat-dot"></div>Photos & Facilities</div>
+          <div class="feat"><div class="feat-dot"></div>Total Teachers</div>
+          <div class="feat"><div class="feat-dot"></div>Total Classrooms</div>
+          <div class="feat"><div class="feat-dot"></div>Class-wise Seat Availability</div>
+          <div class="feat"><div class="feat-dot"></div>Admission Details</div>
+          <div class="feat"><div class="feat-dot"></div>School Fees Info</div>
+          <div class="feat"><div class="feat-dot"></div>Contact & Location</div>
+        </div>
       </div>
     </div>
 
-    <!-- PRINCIPAL PANEL -->
+    <!-- PRINCIPAL -->
     <div class="panel" data-panel="principal" id="panel-principal">
-      <div class="panel-header">
-        <div class="panel-header-inner">
+      <div class="panel-info">
+        <div class="panel-top">
           <div class="panel-emoji">🏫</div>
           <div>
             <div class="panel-title">Principal / Admin Panel</div>
-            <div class="panel-desc">Full administrative control — manage teachers, salaries, seats, and school records.</div>
+            <div class="panel-desc">Full admin control — teachers, salaries, seats, records.</div>
+          </div>
+        </div>
+        <div class="features-row">
+          <div class="feat"><div class="feat-dot"></div>Add Teacher Details</div>
+          <div class="feat"><div class="feat-dot"></div>Salary Management</div>
+          <div class="feat"><div class="feat-dot"></div>Teacher Records</div>
+          <div class="feat"><div class="feat-dot"></div>Class Seat Management</div>
+          <div class="feat"><div class="feat-dot"></div>School Admin Controls</div>
+        </div>
+        <div class="link-buttons">
+          <div class="open-btn" onclick="openSite('principal','https://schoolerp1-framhtml.vercel.app/','schoolerp1-framhtml.vercel.app')">
+            <span class="btn-icon">🏫</span>
+            <span class="btn-label">Open Admin System<span class="btn-url">schoolerp1-framhtml.vercel.app</span></span>
+            <span>▶</span>
           </div>
         </div>
       </div>
-
-      <div class="features-grid">
-        <div class="feature-item"><div class="feature-dot"></div><span>Add Teacher Details</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Teacher Salary Management</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Teacher Records</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Class Seat Management</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>School Admin Controls</span></div>
-      </div>
-
-      <div class="links-section">
-        <div class="links-title">Access Link</div>
-        <a href="https://schoolerp1-framhtml.vercel.app/" target="_blank" class="link-card">
-          <div class="link-card-left">
-            <div class="link-icon">🏫</div>
-            <div class="link-info">
-              <strong>Open Admin System</strong>
-              <small>schoolerp1-framhtml.vercel.app</small>
-            </div>
-          </div>
-          <div class="link-arrow">Open ↗</div>
-        </a>
+      <div class="iframe-viewer" id="iframe-principal">
+        <div class="iframe-topbar">
+          <div class="iframe-dots"><span></span><span></span><span></span></div>
+          <div class="iframe-url-bar" id="url-principal">—</div>
+          <div class="close-iframe" onclick="closeSite('principal')">✕ Close</div>
+        </div>
+        <div class="iframe-container" id="container-principal">
+          <div class="iframe-loading" id="loading-principal"><div class="spinner"></div>Loading...</div>
+          <iframe id="frame-principal" onload="hideLoader('principal')" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
+        </div>
+        <div class="blocked-msg" id="blocked-principal">
+          <div class="big">🔒</div>
+          <p>This website has blocked embedding.<br>Please open it directly in a new tab.</p>
+          <a id="direct-principal" href="#" target="_blank">Open in New Tab ↗</a>
+        </div>
       </div>
     </div>
 
-    <!-- TEACHER PANEL -->
+    <!-- TEACHER -->
     <div class="panel" data-panel="teacher" id="panel-teacher">
-      <div class="panel-header">
-        <div class="panel-header-inner">
+      <div class="panel-info">
+        <div class="panel-top">
           <div class="panel-emoji">👨‍🏫</div>
           <div>
             <div class="panel-title">Teacher Panel</div>
-            <div class="panel-desc">Daily attendance marking, student lists, and class management tools for teachers.</div>
+            <div class="panel-desc">Daily attendance, student lists, class management.</div>
+          </div>
+        </div>
+        <div class="features-row">
+          <div class="feat"><div class="feat-dot"></div>Mark Class Attendance</div>
+          <div class="feat"><div class="feat-dot"></div>View Student List</div>
+          <div class="feat"><div class="feat-dot"></div>Manage Attendance Records</div>
+        </div>
+        <div class="link-buttons">
+          <div class="open-btn" onclick="openSite('teacher','https://besic.vercel.app/','besic.vercel.app')">
+            <span class="btn-icon">📋</span>
+            <span class="btn-label">Open Attendance System<span class="btn-url">besic.vercel.app</span></span>
+            <span>▶</span>
           </div>
         </div>
       </div>
-
-      <div class="features-grid">
-        <div class="feature-item"><div class="feature-dot"></div><span>Mark Class Attendance</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>View Student List</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Manage Attendance Records</span></div>
-      </div>
-
-      <div class="links-section">
-        <div class="links-title">Access Link</div>
-        <a href="https://besic.vercel.app/" target="_blank" class="link-card">
-          <div class="link-card-left">
-            <div class="link-icon">📋</div>
-            <div class="link-info">
-              <strong>Open Attendance System</strong>
-              <small>besic.vercel.app</small>
-            </div>
-          </div>
-          <div class="link-arrow">Open ↗</div>
-        </a>
+      <div class="iframe-viewer" id="iframe-teacher">
+        <div class="iframe-topbar">
+          <div class="iframe-dots"><span></span><span></span><span></span></div>
+          <div class="iframe-url-bar" id="url-teacher">—</div>
+          <div class="close-iframe" onclick="closeSite('teacher')">✕ Close</div>
+        </div>
+        <div class="iframe-container" id="container-teacher">
+          <div class="iframe-loading" id="loading-teacher"><div class="spinner"></div>Loading...</div>
+          <iframe id="frame-teacher" onload="hideLoader('teacher')" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
+        </div>
+        <div class="blocked-msg" id="blocked-teacher">
+          <div class="big">🔒</div>
+          <p>This website has blocked embedding.<br>Please open it directly in a new tab.</p>
+          <a id="direct-teacher" href="#" target="_blank">Open in New Tab ↗</a>
+        </div>
       </div>
     </div>
 
-    <!-- STUDENT PANEL -->
+    <!-- STUDENT -->
     <div class="panel" data-panel="student" id="panel-student">
-      <div class="panel-header">
-        <div class="panel-header-inner">
+      <div class="panel-info">
+        <div class="panel-top">
           <div class="panel-emoji">🎓</div>
           <div>
             <div class="panel-title">Student Panel</div>
-            <div class="panel-desc">Check results, download marksheets, admit cards, and manage student records.</div>
+            <div class="panel-desc">Results, marksheets, admit cards, and student records.</div>
+          </div>
+        </div>
+        <div class="features-row">
+          <div class="feat"><div class="feat-dot"></div>Check Current Results</div>
+          <div class="feat"><div class="feat-dot"></div>View Subject Marks</div>
+          <div class="feat"><div class="feat-dot"></div>Download Admit Card</div>
+          <div class="feat"><div class="feat-dot"></div>Download Marksheet</div>
+          <div class="feat"><div class="feat-dot"></div>Add New Students</div>
+          <div class="feat"><div class="feat-dot"></div>Student Records</div>
+        </div>
+        <div class="link-buttons">
+          <div class="open-btn" onclick="openSite('student','https://schhool-4.vercel.app/','schhool-4.vercel.app')">
+            <span class="btn-icon">🎓</span>
+            <span class="btn-label">Open Student System<span class="btn-url">schhool-4.vercel.app</span></span>
+            <span>▶</span>
+          </div>
+          <div class="open-btn" onclick="openSite('student','https://marksheetprint2.vercel.app/','marksheetprint2.vercel.app')">
+            <span class="btn-icon">📄</span>
+            <span class="btn-label">Result & Print System<span class="btn-url">marksheetprint2.vercel.app</span></span>
+            <span>▶</span>
           </div>
         </div>
       </div>
-
-      <div class="features-grid">
-        <div class="feature-item"><div class="feature-dot"></div><span>Check Current Results</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>View Subject Marks</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Download Admit Card</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Download Marksheet</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Add New Students</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Student Records</span></div>
-      </div>
-
-      <div class="links-section">
-        <div class="links-title">Access Links</div>
-        <a href="https://schhool-4.vercel.app/" target="_blank" class="link-card">
-          <div class="link-card-left">
-            <div class="link-icon">🎓</div>
-            <div class="link-info">
-              <strong>Open Student System</strong>
-              <small>schhool-4.vercel.app</small>
-            </div>
-          </div>
-          <div class="link-arrow">Open ↗</div>
-        </a>
-        <a href="https://marksheetprint2.vercel.app/" target="_blank" class="link-card">
-          <div class="link-card-left">
-            <div class="link-icon">📄</div>
-            <div class="link-info">
-              <strong>Result & Print System</strong>
-              <small>marksheetprint2.vercel.app — Marksheet / Admit Card</small>
-            </div>
-          </div>
-          <div class="link-arrow">Open ↗</div>
-        </a>
+      <div class="iframe-viewer" id="iframe-student">
+        <div class="iframe-topbar">
+          <div class="iframe-dots"><span></span><span></span><span></span></div>
+          <div class="iframe-url-bar" id="url-student">—</div>
+          <div class="close-iframe" onclick="closeSite('student')">✕ Close</div>
+        </div>
+        <div class="iframe-container" id="container-student">
+          <div class="iframe-loading" id="loading-student"><div class="spinner"></div>Loading...</div>
+          <iframe id="frame-student" onload="hideLoader('student')" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
+        </div>
+        <div class="blocked-msg" id="blocked-student">
+          <div class="big">🔒</div>
+          <p>This website has blocked embedding.<br>Please open it directly in a new tab.</p>
+          <a id="direct-student" href="#" target="_blank">Open in New Tab ↗</a>
+        </div>
       </div>
     </div>
 
-    <!-- EXTRA PANEL -->
+    <!-- EXTRA -->
     <div class="panel" data-panel="extra" id="panel-extra">
-      <div class="panel-header">
-        <div class="panel-header-inner">
+      <div class="panel-info">
+        <div class="panel-top">
           <div class="panel-emoji">🔗</div>
           <div>
             <div class="panel-title">Extra Projects & AI Chat</div>
-            <div class="panel-desc">AI-powered school assistant and global public chat for advanced features.</div>
+            <div class="panel-desc">AI school assistant and global public chat.</div>
+          </div>
+        </div>
+        <div class="features-row">
+          <div class="feat"><div class="feat-dot"></div>School AI Chat System</div>
+          <div class="feat"><div class="feat-dot"></div>Students Can Ask AI</div>
+          <div class="feat"><div class="feat-dot"></div>Public Global Chat</div>
+        </div>
+        <div class="link-buttons">
+          <div class="open-btn" onclick="openSite('extra','https://dataleran.vercel.app/','dataleran.vercel.app')">
+            <span class="btn-icon">🤖</span>
+            <span class="btn-label">AI School Chat<span class="btn-url">dataleran.vercel.app</span></span>
+            <span>▶</span>
+          </div>
+          <div class="open-btn" onclick="openSite('extra','https://publicchat-2udg.onrender.com','publicchat-2udg.onrender.com')">
+            <span class="btn-icon">🌍</span>
+            <span class="btn-label">Public Global Chat<span class="btn-url">publicchat-2udg.onrender.com</span></span>
+            <span>▶</span>
           </div>
         </div>
       </div>
-
-      <div class="features-grid">
-        <div class="feature-item"><div class="feature-dot"></div><span>School AI Chat System</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Students Can Ask AI Questions</span></div>
-        <div class="feature-item"><div class="feature-dot"></div><span>Public Global Chat</span></div>
-      </div>
-
-      <div class="links-section">
-        <div class="links-title">Access Links</div>
-        <a href="https://dataleran.vercel.app/" target="_blank" class="link-card">
-          <div class="link-card-left">
-            <div class="link-icon">🤖</div>
-            <div class="link-info">
-              <strong>AI School Chat</strong>
-              <small>dataleran.vercel.app — Ask questions to AI</small>
-            </div>
-          </div>
-          <div class="link-arrow">Open ↗</div>
-        </a>
-        <a href="https://publicchat-2udg.onrender.com" target="_blank" class="link-card">
-          <div class="link-card-left">
-            <div class="link-icon">🌍</div>
-            <div class="link-info">
-              <strong>Public Global Chat</strong>
-              <small>publicchat-2udg.onrender.com — Advanced Project</small>
-            </div>
-          </div>
-          <div class="link-arrow">Open ↗</div>
-        </a>
+      <div class="iframe-viewer" id="iframe-extra">
+        <div class="iframe-topbar">
+          <div class="iframe-dots"><span></span><span></span><span></span></div>
+          <div class="iframe-url-bar" id="url-extra">—</div>
+          <div class="close-iframe" onclick="closeSite('extra')">✕ Close</div>
+        </div>
+        <div class="iframe-container" id="container-extra">
+          <div class="iframe-loading" id="loading-extra"><div class="spinner"></div>Loading...</div>
+          <iframe id="frame-extra" onload="hideLoader('extra')" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
+        </div>
+        <div class="blocked-msg" id="blocked-extra">
+          <div class="big">🔒</div>
+          <p>This website has blocked embedding.<br>Please open it directly in a new tab.</p>
+          <a id="direct-extra" href="#" target="_blank">Open in New Tab ↗</a>
+        </div>
       </div>
     </div>
 
   </main>
 </div>
 
-<footer>
-  Smart School Management System &nbsp;•&nbsp; All rights reserved
-</footer>
+<footer>Smart School Management System &nbsp;•&nbsp; All rights reserved</footer>
 
 <script>
-function showPanel(id, navEl) {
-  // Hide all panels
+// Track current URL per panel
+const currentUrls = {};
+
+function showPanel(id, el) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  // Remove active from all nav items
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  // Show selected
   document.getElementById('panel-' + id).classList.add('active');
-  navEl.classList.add('active');
+  el.classList.add('active');
+}
+
+function openSite(panelId, url, label) {
+  currentUrls[panelId] = url;
+
+  const viewer    = document.getElementById('iframe-' + panelId);
+  const frame     = document.getElementById('frame-' + panelId);
+  const urlBar    = document.getElementById('url-' + panelId);
+  const loader    = document.getElementById('loading-' + panelId);
+  const container = document.getElementById('container-' + panelId);
+  const blocked   = document.getElementById('blocked-' + panelId);
+  const directLink= document.getElementById('direct-' + panelId);
+
+  // Reset state
+  blocked.style.display = 'none';
+  container.style.display = 'block';
+  loader.style.display = 'flex';
+  frame.src = '';
+
+  urlBar.textContent = label || url;
+  directLink.href = url;
+  viewer.classList.add('visible');
+
+  // Set src after short delay
+  setTimeout(() => { frame.src = url; }, 80);
+
+  // Timeout fallback — if blocked, show message
+  const timeout = setTimeout(() => {
+    try {
+      // Try to access contentDocument — will throw if blocked by X-Frame-Options
+      const doc = frame.contentDocument;
+      if (!doc || doc.body === null) throw new Error('blocked');
+    } catch(e) {
+      showBlocked(panelId);
+    }
+  }, 5000);
+
+  frame._timeout = timeout;
+
+  setTimeout(() => viewer.scrollIntoView({ behavior:'smooth', block:'start' }), 120);
+}
+
+function hideLoader(panelId) {
+  const loader = document.getElementById('loading-' + panelId);
+  const frame  = document.getElementById('frame-' + panelId);
+  if (loader) loader.style.display = 'none';
+  if (frame && frame._timeout) clearTimeout(frame._timeout);
+
+  // Check if blank (blocked)
+  try {
+    const href = frame.contentWindow.location.href;
+    if (href === 'about:blank' || href === '') {
+      // might still be loading, ignore
+    }
+  } catch(e) {
+    // Cross-origin = loaded but different origin, that's fine
+  }
+}
+
+function showBlocked(panelId) {
+  const loader    = document.getElementById('loading-' + panelId);
+  const container = document.getElementById('container-' + panelId);
+  const blocked   = document.getElementById('blocked-' + panelId);
+  if (loader) loader.style.display = 'none';
+  container.style.display = 'none';
+  blocked.style.display = 'block';
+}
+
+function closeSite(panelId) {
+  const viewer = document.getElementById('iframe-' + panelId);
+  const frame  = document.getElementById('frame-' + panelId);
+  const blocked= document.getElementById('blocked-' + panelId);
+  const container = document.getElementById('container-' + panelId);
+  viewer.classList.remove('visible');
+  frame.src = '';
+  blocked.style.display = 'none';
+  container.style.display = 'block';
 }
 </script>
-
 </body>
 </html>
